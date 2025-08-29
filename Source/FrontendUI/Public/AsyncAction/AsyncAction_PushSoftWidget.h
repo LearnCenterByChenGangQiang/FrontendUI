@@ -23,13 +23,25 @@ public:
 	static UAsyncAction_PushSoftWidget* PushSoftWidget(
 		const UObject* WorldContextObject,
 		APlayerController* OwningPlayerController,
-		TSoftObjectPtr<UWidget_ActivatableBase> InSoftWidgetClass,
+		TSoftClassPtr<UWidget_ActivatableBase> InSoftWidgetClass,
 		UPARAM(meta=(Categories="Frontend.WidgetStack")) FGameplayTag InWidgetStackTag,
 		bool bFocusOnNewlyPushed = true);
+
+	//~ Begin UBlueprintAsyncActionBase Interface
+	virtual void Activate() override;
+	//~ End UBlueprintAsyncActionBase Interface
 
 	UPROPERTY(BlueprintAssignable)
 	FOnPushSoftWidgetDelegate OnWidgetCreatedBeforePush;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnPushSoftWidgetDelegate AfterPush;
+
+private:
+	TWeakObjectPtr<UWorld> CachedOwningWorld;
+	TWeakObjectPtr<APlayerController> CachedOwningPC;
+	TSoftClassPtr<UWidget_ActivatableBase> CachedSoftWidgetClass;
+	FGameplayTag CachedWidgetStackTag;
+	bool bCachedFocusOnNewlyPushedWidget = false;
+	
 };
