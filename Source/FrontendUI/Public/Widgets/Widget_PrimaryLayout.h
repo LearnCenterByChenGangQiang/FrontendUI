@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "Widget_PrimaryLayout.generated.h"
 
+
 class UCommonActivatableWidgetContainerBase;
 /**
  * 
